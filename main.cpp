@@ -1,37 +1,57 @@
 #include <iostream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
+template <typename T>
+void test(const T& actual, const T& expected, const string& name) {
+    if (actual == expected)
+        cout << "[PASS] " << name << '\n';
+    else
+        cout << "[FAIL] " << name << '\n';
+}
+
+template <typename T>
+void testVector(const vector<T>& actual,
+                const vector<T>& expected,
+                const string& name) {
+    if (actual == expected)
+        cout << "[PASS] " << name << '\n';
+    else
+        cout << "[FAIL] " << name << '\n';
+}
+
 class Solution {
 public:
-    vector<int> twoSum(vector<int>& nums, int target) {
-        unordered_map<int, int> seen;
+    bool isAnagram(string s, string t) {
+        if(s.length() != t.length()) return false;
 
-        for(int i = 0; i < nums.size(); i++){
-            int rest = target - nums[i];
-        
-            auto it = seen.find(rest);
-            if(it != seen.end()){
-                return {it->second, i};
-            }
+        unordered_map<char, int> m;
 
-            seen[nums[i]] = i;
+        for(char c : s){ m[c] += 1; }
+
+        for(char c : t){
+            if(--m[c] < 0) return false;
         }
-        return {};
+
+        return true;
     }
 };
 
-
 int main(void){
-	Solution s;
-	//vector<int> nums = {2,7,11,15};
-	vector<int> nums = {3,2,4};
+    Solution s;
 
-	vector<int> result = s.twoSum(nums, 6);
-	//vector<int> result = s.twoSum(nums, 9);
+    test(
+        s.isAnagram("anagram", "nagaram"),
+        true,
+        "1"
+    );
 
-	std::cout << "[" << result[0] << ", " << result[1] << "]" << std::endl;
-
-	return 0;
+    test(
+        s.isAnagram("rat", "car"),
+        false,
+        "2"
+    );
 }
 
