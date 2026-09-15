@@ -6,16 +6,26 @@ using namespace std;
 
 class Solution {
 public:
-    bool containsDuplicate(std::vector<int>& nums) {
-        std::unordered_set<int> seen;
-        seen.reserve(nums.size());
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> m;
 
-        for (int x : nums) {
-            if (!seen.insert(x).second) {
-                return true;
-            }
+        for(size_t i = 0; i < nums.size(); i++){
+            m[nums[i]] += 1;
         }
-        return false;
+    
+        vector<pair<int, int>> sorted(m.begin(), m.end());
+
+        sort(sorted.begin(), sorted.end(), [](auto& a, auto &b){
+            return a.second > b.second;
+        });
+
+        vector<int> res;
+
+        for(int i = 0; i < k; i++){
+            res.push_back(sorted[i].first);
+        }
+
+        return res;
     }
 };
 
