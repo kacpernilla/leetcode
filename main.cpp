@@ -1,28 +1,29 @@
 #include <string>
-#include <vector>
+#include <stack>
 
 using namespace std;
 
 class Solution {
 public:
-    string longestCommonPrefix(vector<string>& strs) {
-        int total = strs[0].length();
+    bool isValid(string s) {
+        stack<char> st;
 
-        for(int i = 0; i < strs.size() - 1; i++){
-            int current = 0;
+        for(char c : s) {
+            if(c == '(' || c == '[' || c == '{') {
+                st.push(c);
+            } else {
+                if(st.empty()) return false;
 
-            for(int j = 0; j < strs[i].length() && j < strs[i+1].length(); j++){
-                if(strs[i][j] == strs[i+1][j]){
-                    current += 1;
-                } else {
-                    break;
-                }
+                char top = st.top();
+                st.pop();
+
+                if(c == ')' && top != '(') return false;
+                if(c == ']' && top != '[') return false;
+                if(c == '}' && top != '{') return false;
             }
-
-            total = min(total, current);
         }
 
-        return string(strs[0].begin(), strs[0].begin() + total);
+        return st.empty();
     }
 };
 
