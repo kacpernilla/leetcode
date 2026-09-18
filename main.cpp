@@ -1,30 +1,21 @@
-#include <string>
-#include <stack>
-
-using namespace std;
+#include <bits/stdc++.h>
+#include <execution>
 
 class Solution {
 public:
-    bool isValid(string s) {
-        stack<char> st;
+    int mySqrt(int x) {
+        int i = 1;
 
-        for(char c : s) {
-            if(c == '(' || c == '[' || c == '{') {
-                st.push(c);
-            } else {
-                if(st.empty()) return false;
-
-                char top = st.top();
-                st.pop();
-
-                if(c == ')' && top != '(') return false;
-                if(c == ']' && top != '[') return false;
-                if(c == '}' && top != '{') return false;
+        while (1) {
+            if (i > x / i) {
+                return i - 1;
+            } else if (i == x / i) {
+                return i;
             }
-        }
 
-        return st.empty();
+            i++;
+        }
     }
 };
 
-int main(){ }
+int main() { }
