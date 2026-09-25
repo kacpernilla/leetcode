@@ -2,25 +2,28 @@
 
 using namespace std;
 
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    int removeDuplicates(vector<int>& nums) {
-        int i = 0;
-        size_t iterations = nums.size();
+    ListNode* middleNode(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head;
 
-        while(iterations){
-            if(i + 1 < nums.size()){
-                if(nums[i] == nums[i+1]){
-                    nums.erase(nums.begin() + i);
-                    i--;
-                }
-            }
-            i++;
-            iterations--;
-        };
-        return nums.size();
+        while(fast != nullptr && fast->next != nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
     }
 };
 
-
-int main(void) { }
+int main(void) {}
